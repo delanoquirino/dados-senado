@@ -20,6 +20,21 @@ type UfChartProps = {
 
 }
 
+interface ChartDataEntry {
+    uf: string;
+    total_per_senator: number; // Representa o valor das despesas
+}
+
+interface ChartData {
+    className: string;
+    radius: number;
+    dataKey: string;
+    name: string;
+    value: number;
+    payload: ChartDataEntry;
+    hide: boolean;
+}
+
 export const PartyChart = ({ data, year }: UfChartProps) => {
     // encontra os dados
 
@@ -54,7 +69,7 @@ export const PartyChart = ({ data, year }: UfChartProps) => {
 
     const CustomTooltip = ({ active, payload, label }: {
         active: boolean;
-        payload: any[];
+        payload: ChartData[];
         label: string;
     }) => {
 
@@ -94,11 +109,11 @@ export const PartyChart = ({ data, year }: UfChartProps) => {
                             style: 'currency',
                             currency: 'BRL',
                         }).format(value)} />
-                        <Tooltip content={<CustomTooltip />} cursor={{ fill: 'transparent' }} />
+                        <Tooltip content={<CustomTooltip active={false} payload={[]} label={""} />} cursor={{ fill: 'transparent' }} />
                         <Bar dataKey="total_per_senator" className="fill-blue-500" layout="horizontal" radius={4} >
 
                             <LabelList dataKey="party" position="insideLeft" className="fill-white font-bold" />
-                            <LabelList dataKey="total_per_senator" position="right" fontSize={10} className="fill-slate-600" formatter={(value: any) => new Intl.NumberFormat('pt-BR', {
+                            <LabelList dataKey="total_per_senator" position="right" fontSize={10} className="fill-slate-600" formatter={(value: number) => new Intl.NumberFormat('pt-BR', {
                                 style: 'currency',
                                 currency: 'BRL',
                             }).format(value)} />

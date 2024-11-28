@@ -5,7 +5,7 @@ import { cn } from "@/lib/utils";
 import { Bar, BarChart, Cell, LabelList, Tooltip, XAxis, YAxis } from "recharts";
 
 type UfChartProps = {
-    year: number;
+    year: string;
     data: [
         {
             year: string, data: {
@@ -15,9 +15,28 @@ type UfChartProps = {
     ]
 }
 
-export const UfChart = ({ data, year }: UfChartProps) => {
+
+
+interface ChartEntry {
+    uf: string;
+    total_expenses: number; // Representa o valor das despesas
+}
+
+interface ChartData {
+    className: string;
+    radius: number;
+    dataKey: string;
+    name: string;
+    value: number;
+    payload: ChartEntry;
+    hide: boolean;
+}
+
+
+export const UfChart = ({ data }: UfChartProps, year: number) => {
     // encontra os dados
-    let chartData = data.find((item) => Number(item.year) === year)?.data;
+    let chartData: ChartEntry[] = data.find((item) => Number(item.year) === year)?.data;
+    console.log('chartData', chartData)
     if (!chartData) return null
 
     //encontra os dados do ano
@@ -29,13 +48,13 @@ export const UfChart = ({ data, year }: UfChartProps) => {
         };
         chartData.push(average);
     }
-
     // faz a ordenação por gastos
     chartData = chartData.sort((a, b) => b.total_expenses - a.total_expenses);
 
+
     const CustomTooltip = ({ active, payload, label }: {
         active: boolean;
-        payload: any[];
+        payload: ChartData[];
         label: string;
     }) => {
 
@@ -74,13 +93,22 @@ export const UfChart = ({ data, year }: UfChartProps) => {
                             style: 'currency',
                             currency: 'BRL',
                         }).format(value)} />
-                        <Tooltip content={<CustomTooltip />} />
+                        <Tooltip content={<CustomTooltip active={false} payload={[]} label={""} />} />
                         <Bar dataKey="total_expenses" className="fill-orange-500" layout="horizontal" radius={4} background={{ fill: '#eee' }}>
-                            {chartData.map((entry, index) => (
-                                <Cell key={`cell-${index}`} className={cn('fill-current', entry.uf === 'Brasil' ? 'fill-orange-800' : 'fill-orange-500')} />
-                            ))}
+                            {chartData.map((entry: ChartEntry, index: number) => {
+
+                                return (
+                                    <Cell
+                                        key={`cell-${index}`}
+                                        className={cn(
+                                            'fill-current',
+                                            entry.uf === 'Brasil' ? 'fill-orange-800' : 'fill-orange-500'
+                                        )}
+                                    />
+                                );
+                            })}
                             <LabelList dataKey="uf" position="insideLeft" className="fill-white font-bold" />
-                            <LabelList dataKey="total_expenses" position="insideRight" fontSize={10} className="fill-white" formatter={(value: any) => new Intl.NumberFormat('pt-BR', {
+                            <LabelList dataKey="total_expenses" position="insideRight" fontSize={10} className="fill-white" formatter={(value: number) => new Intl.NumberFormat('pt-BR', {
                                 style: 'currency',
                                 currency: 'BRL',
                             }).format(value)} />

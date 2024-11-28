@@ -21,7 +21,7 @@ export default async function Home({ searchParams }: HomeProps) {
 
   const ufData = await ufRes.json();
   const partyData = await partyRes.json();
-  console.log('year', year)
+
   return (
     <main className=" container mx-auto py-16">
       <Header year={year} expensesType={expensesType} />
