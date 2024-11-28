@@ -35,8 +35,9 @@ interface ChartData {
     hide: boolean;
 }
 
-export const PartyChart = ({ data }: UfChartProps, year: number) => {
+export const PartyChart = ({ data, year }: UfChartProps) => {
     // encontra os dados
+
     const chartData = data.find((item) => Number(item.year) === year)?.data;
 
     if (!chartData) return null;

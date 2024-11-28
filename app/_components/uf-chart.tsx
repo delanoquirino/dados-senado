@@ -25,7 +25,7 @@ interface ChartData {
 }
 
 
-export const UfChart = ({ data }: UfChartProps, year: number) => {
+export const UfChart = ({ data, year }: UfChartProps) => {
 
     // encontra os dados
     let chartData = data.find((item) => Number(item.year) === year)?.data;
