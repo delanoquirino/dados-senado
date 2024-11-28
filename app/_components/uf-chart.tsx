@@ -5,7 +5,7 @@ import { cn } from "@/lib/utils";
 import { Bar, BarChart, Cell, LabelList, Tooltip, XAxis, YAxis } from "recharts";
 
 type UfChartProps = {
-    year: string;
+    year: number;
     data: [
         {
             year: string, data: {
@@ -36,7 +36,7 @@ interface ChartData {
 export const UfChart = ({ data }: UfChartProps, year: number) => {
     // encontra os dados
     let chartData: ChartEntry[] = data.find((item) => Number(item.year) === year)?.data;
-    console.log('chartData', chartData)
+
     if (!chartData) return null
 
     //encontra os dados do ano
