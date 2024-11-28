@@ -4,22 +4,14 @@ import { ChartContainer } from "@/components/ui/chart";
 import { cn } from "@/lib/utils";
 import { Bar, BarChart, Cell, LabelList, Tooltip, XAxis, YAxis } from "recharts";
 
-type UfChartProps = {
-    year: number;
-    data: [
-        {
-            year: string, data: {
-                uf: string, total_expenses: number
-            }[]
-        }[]
-    ]
-}
-
-
-
 interface ChartEntry {
     uf: string;
-    total_expenses: number; // Representa o valor das despesas
+    total_expenses: number;
+}
+
+interface UfChartProps {
+    year: number;
+    data: { year: number; data: ChartEntry[] }[];
 }
 
 interface ChartData {
@@ -34,9 +26,11 @@ interface ChartData {
 
 
 export const UfChart = ({ data }: UfChartProps, year: number) => {
-    // encontra os dados
-    let chartData: ChartEntry[] = data.find((item) => Number(item.year) === year)?.data;
 
+    // encontra os dados
+    let chartData = data.find((item) => Number(item.year) === year)?.data;
+
+    console.log('chartData', chartData)
     if (!chartData) return null
 
     //encontra os dados do ano
