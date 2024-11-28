@@ -37,7 +37,7 @@ export const Header = ({ year, expensesType }: { year: number, expensesType: 'uf
 
     return (
         <header className="mb-12 flex flex-col gap-10 justify-center items-center lg:flex-row lg:justify-between">
-            <div className="flex items-center gap-4">
+            <div className="flex items-center gap-4 flex-col sm:flex-row p-2">
                 <Image src={logo} alt='Bandeira do Brasil' width={70} height={70} />
                 <div className="flex flex-col">
                     <h1 className='text-3xl font-bold mb-1'>Gastos dos Senadores Brasileiros</h1>
@@ -46,14 +46,15 @@ export const Header = ({ year, expensesType }: { year: number, expensesType: 'uf
                 </div>
 
             </div>
-            <nav className='flex gap-6'>
-                <div className='border-r-2 pr-6 border-black/10'>
+            <nav className='flex gap-6 flex-col sm:flex-row'>
+                <div className='border-b-2 pb-6 sm:border-r-2 sm:pr-6 sm:border-b-0 sm:pb-0 border-black/10 w-full'>
                     <DropdownMenu >
 
-                        <DropdownMenuTrigger>  <Button variant="outline" className='flex flex-col items-center justify-center text-xs gap-0 border-black/10 border-2 px-4 py-3 rounded-lg '>
-                            <CalendarIcon />
-                            Calendario
-                        </Button>
+                        <DropdownMenuTrigger className=' w-full'>
+                            <Button className='flex flex-col items-center justify-center text-xs gap-0 border-black/10 border-2   w-full rounded-lg '>
+                                <CalendarIcon className='w-24 h-24' />
+                                Calendario
+                            </Button>
                         </DropdownMenuTrigger>
                         <DropdownMenuContent>
                             <DropdownMenuLabel>Escolha o ano</DropdownMenuLabel>
@@ -69,13 +70,13 @@ export const Header = ({ year, expensesType }: { year: number, expensesType: 'uf
                     </DropdownMenu>
                 </div>
 
-                <div className='flex gap-4'>
+                <div className='flex gap-4 flex-col sm:flex-row'>
                     <NavButton expenseType='uf' onClick={() => router.push(`${pathname}?${createQueryString('type', 'uf')} `)} >
                         <MapIcon className='w-24 h-24' />
                         Gastos por UF
                     </NavButton>
                     <NavButton expenseType='party' onClick={() => router.push(`${pathname}?${createQueryString('type', 'party')} `)}>
-                        <FlagIcon />
+                        <FlagIcon className='w-24 h-24' />
                         Gastos por Partido
                     </NavButton>
                 </div>

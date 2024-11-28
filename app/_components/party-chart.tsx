@@ -110,7 +110,7 @@ export const PartyChart = ({ data, year }: UfChartProps) => {
                             currency: 'BRL',
                         }).format(value)} />
                         <Tooltip content={<CustomTooltip active={false} payload={[]} label={""} />} cursor={{ fill: 'transparent' }} />
-                        <Bar dataKey="total_per_senator" className="fill-blue-500" layout="horizontal" radius={4} >
+                        <Bar dataKey="total_per_senator" className="fill-blue-500" layout="horizontal" radius={4} background={{ fill: '#eee' }} activeBar={false} >
 
                             <LabelList dataKey="party" position="insideLeft" className="fill-white font-bold" />
                             <LabelList dataKey="total_per_senator" position="right" fontSize={10} className="fill-slate-600" formatter={(value: number) => new Intl.NumberFormat('pt-BR', {
